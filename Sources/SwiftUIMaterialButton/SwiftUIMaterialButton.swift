@@ -12,19 +12,36 @@ public struct MaterialButton<Content> : View where Content : View {
     public let action: () -> Void
     @ViewBuilder public let label: () -> Content
     
-    public init(backgroundColor: Color = Color.accentColor, radius: CGFloat = 4, action: @escaping () -> Void, label: @escaping () -> Content) {
+    public init(
+        paddingH: CGFloat = 16,
+        paddingV: CGFloat = 8,
+        fontSize: CGFloat = 17,
+        fontColor: Color = .white,
+        backgroundColor: Color = .accentColor, 
+        radius: CGFloat = 4, 
+        action: @escaping () -> Void, 
+        label: @escaping () -> Content
+    ) {
+        self.paddingH = paddingH
+        self.paddingV = paddingV
+        self.fontSize = fontSize
+        self.fontColor = fontColor
         self.backgroundColor = backgroundColor
         self.radius = radius
         self.action = action
         self.label = label
     }
 
-    public var body: some View {
+    var body: some View {
         Button(action: {}, label: {
             label()
         })
         .buttonStyle(
             MaterialButtonStyle(
+                paddingH = paddingH
+                paddingV = paddingV
+                fontSize = fontSize
+                fontColor = fontColor
                 backgroundColor: backgroundColor,
                 radius: radius,
                 action: action
@@ -48,7 +65,19 @@ public struct MaterialButtonStyle : ButtonStyle {
     @State private var tapPoint: CGPoint = .zero
     @State private var size: CGSize = .zero
     
-    public init(backgroundColor: Color, radius: CGFloat, action: @escaping () -> Void) {
+    public init(
+        paddingH: CGFloat = 16,
+        paddingV: CGFloat = 8,
+        fontSize: CGFloat = 17,
+        fontColor: Color = .white,
+        backgroundColor: Color, 
+        radius: CGFloat, 
+        action: @escaping () -> Void
+    ) {
+        self.paddingH = paddingH
+        self.paddingV = paddingV
+        self.fontSize = fontSize
+        self.fontColor = fontColor
         self.backgroundColor = backgroundColor
         self.radius = radius
         self.action = action
@@ -56,8 +85,8 @@ public struct MaterialButtonStyle : ButtonStyle {
     
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.horizontal, paddingH)
+            .padding(.vertical, paddingV)
             .background {
                 GeometryReader { reader in
                     Rectangle()
@@ -77,7 +106,8 @@ public struct MaterialButtonStyle : ButtonStyle {
                         }
                 }
             }
-            .foregroundColor(.white)
+            .font(.system(size: fontSize))
+            .foregroundColor(fontColor)
             .clipShape(RoundedRectangle(cornerRadius: radius))
             .gesture(
                 DragGesture(minimumDistance: 0)
