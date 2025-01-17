@@ -41,10 +41,10 @@ public struct MaterialButton<Content> : View where Content : View {
         })
         .buttonStyle(
             MaterialButtonStyle(
-                paddingH = paddingH
-                paddingV = paddingV
-                fontSize = fontSize
-                fontColor = fontColor
+                paddingH: paddingH,
+                paddingV: paddingV,
+                fontSize: fontSize,
+                fontColor: fontColor,
                 backgroundColor: backgroundColor,
                 radius: radius,
                 action: action
