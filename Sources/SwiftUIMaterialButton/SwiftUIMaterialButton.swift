@@ -5,10 +5,13 @@ import SwiftUI
 
 //@available(macOS 14.0, *)
 public struct MaterialButton<Content> : View where Content : View {
-    
+
+    public let paddingH: CGFloat
+    public let paddingV: CGFloat
+    public let fontSize: CGFloat
+    public let fontColor: Color
     public let backgroundColor: Color
     public let radius: CGFloat
-    
     public let action: () -> Void
     @ViewBuilder public let label: () -> Content
     
@@ -32,7 +35,7 @@ public struct MaterialButton<Content> : View where Content : View {
         self.label = label
     }
 
-    var body: some View {
+    public var body: some View {
         Button(action: {}, label: {
             label()
         })
@@ -52,16 +55,18 @@ public struct MaterialButton<Content> : View where Content : View {
 
 //@available(macOS 14.0, *)
 public struct MaterialButtonStyle : ButtonStyle {
-    
+
+    public let paddingH: CGFloat
+    public let paddingV: CGFloat
+    public let fontSize: CGFloat
+    public let fontColor: Color
     public let backgroundColor: Color
     public let radius: CGFloat
     public let action: () -> Void
     public let backgroundColorPressed: Color = .white.opacity(0.15)
     
     @State private var isPressed = false
-    
     @State private var rippleRadius: CGFloat = 0
-    
     @State private var tapPoint: CGPoint = .zero
     @State private var size: CGSize = .zero
     
